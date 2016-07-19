@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Chart from '../components/chart';
+import GoogleMap from '../components/google_map';
 
 export class WeatherList extends Component {
 	renderWeather(cityData) {
@@ -9,10 +10,17 @@ export class WeatherList extends Component {
 		const temps = cityData.list.map(weather => weather.main.temp);
 		const pressures = cityData.list.map(weather => weather.main.pressure);
 		const humidities = cityData.list.map(weather => weather.main.humidity);
+		// destructuring: the line below is the same as writing:
+		// const lon = cityData.city.coor.lon;
+		// const lat = cityData.city.coor.lat;
+		// to use this the const names would need to be identical to the properties in the 'coor' object
+		const { lon, lat } = cityData.city.coord;
 
 		return(
 			<tr key={name}>
-				<td>{name}</td>
+				<td>
+					<GoogleMap lon={lon} lat={lat} />
+				</td>
 				<td>
 					<Chart data={temps} color="red" units="K" />
 				</td>
