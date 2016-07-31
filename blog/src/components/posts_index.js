@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchPosts } from '../actions/index';
 
 class PostsIndex extends Component {
 	// componentWillMount is a lifecycle method.  This will be called the first time the dom is loaded/rendered, but not on subsequent re-renders.
 	// Because it's called once it's a great place to put my action creator.
 	componentWillMount() {
-		console.log('this would be a good time to call an action creator to fetch posts');
+		this.props.fetchPosts();
 	};
 
 	render() {
@@ -14,4 +16,4 @@ class PostsIndex extends Component {
 	};
 };
 
-export default PostsIndex;
+export default connect(null, { fetchPosts })(PostsIndex);
