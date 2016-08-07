@@ -17,6 +17,9 @@ class PostsNew extends Component {
 					<label>Title</label>
 					{/* {...title} destructures the object into its separate keyes and values.  For example: onChange, onBlur, etc. */}
 					<input type="text" className="form-control" {...title} />
+					<div className="text-help">
+					{title.touched ? title.error : ''}
+					</div>
 				</div>
 
 				<div className="form-group">
@@ -35,13 +38,24 @@ class PostsNew extends Component {
 	}
 }
 
+function validate(values) {
+	const errors = {};
+
+	if(!values.title) {
+		errors.title = 'Enter a username';
+	}
+
+	return errors;
+}
+
 // redux connect and reduxForm do the same thing, but have a different order, reduxForm has the additional config 1st
 // connect: first argument is mapStateToProps, 2nd is mapDispatchToProps
 // reduxForm: 1st is form config, 2nd is mapStateToProps, 3rd is mapDispatchToProps
 
 export default reduxForm({
 	form: 'PostsNewForm', // this can be named whatever, just needs to be unique
-	fields: ['title', 'categories', 'content']
+	fields: ['title', 'categories', 'content'],
+	validate
 }, null, { createPost })(PostsNew);
 
 // user types something in...record it on application state
