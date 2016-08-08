@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { createPost } from '../actions/index';
+import { Link } from 'react-router';
 
 class PostsNew extends Component {
 	render() {
@@ -13,7 +14,8 @@ class PostsNew extends Component {
 		return(
 			<form onSubmit={handleSubmit(this.props.createPost)}>
 				<h3>Create a New Post</h3>
-				<div className="form-group">
+
+				<div className={`form-group ${title.touched && title.invalid ? 'has-danger' : ''}`}>
 					<label>Title</label>
 					{/* {...title} destructures the object into its separate keyes and values.  For example: onChange, onBlur, etc. */}
 					<input type="text" className="form-control" {...title} />
@@ -22,17 +24,24 @@ class PostsNew extends Component {
 					</div>
 				</div>
 
-				<div className="form-group">
+				<div className={`form-group ${categories.touched && categories.invalid ? 'has-danger' : ''}`}>
 					<label>Categories</label>
 					<input type="text" className="form-control" {...categories} />
+					<div className="text-help">
+					{categories.touched ? categories.error : ''}
+					</div>
 				</div>
 
-				<div className="form-group">
+				<div className={`form-group ${content.touched && content.invalid ? 'has-danger' : ''}`}>
 					<label>Content</label>
 					<textarea className="form-control" {...content} />
+					<div className="text-help">
+					{content.touched ? content.error : ''}
+					</div>
 				</div>
 
 				<button type="submit" className="btn btn-primary">Submit</button>
+				<Link to="/" className="btn btn-danger">Cancel</Link>
 			</form>
 		);
 	}
@@ -43,6 +52,14 @@ function validate(values) {
 
 	if(!values.title) {
 		errors.title = 'Enter a username';
+	}
+
+	if(!values.categories) {
+		errors.categories = 'Enter category';
+	}
+
+	if(!values.content) {
+		errors.content = 'Enter some content';
 	}
 
 	return errors;
