@@ -20,7 +20,7 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   devServer: {
-    historyApiFallback: true,
-    contentBase: './'
+    contentBase: './',
+    historyApiFallback: true
   }
 };
